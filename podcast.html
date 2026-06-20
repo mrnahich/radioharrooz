@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Harrooz Radio — Live</title>
-<meta name="description" content="Harrooz Radio — listen live, every day.">
+<title>Harrooz Radio — Podcast Archive</title>
+<meta name="description" content="Harrooz — listen to past episodes.">
 <meta name="theme-color" content="#3E2A1E">
 
 <link rel="manifest" href="manifest.json">
@@ -19,12 +19,11 @@
 </head>
 <body>
 
-<main class="cabinet" id="cabinet" data-state="paused">
+<main class="cabinet">
   <div class="cabinet-inner">
 
     <svg class="dial" viewBox="0 0 200 36" aria-hidden="true">
       <line class="dial-track" x1="8" y1="30" x2="192" y2="30" stroke-width="1"/>
-      <!-- minor ticks -->
       <g class="dial-tick-major" stroke-width="1">
         <line x1="12" y1="26" x2="12" y2="30"/><line x1="21" y1="27" x2="21" y2="30"/><line x1="31" y1="27" x2="31" y2="30"/><line x1="40" y1="27" x2="40" y2="30"/>
         <line x1="50" y1="26" x2="50" y2="30"/><line x1="59" y1="27" x2="59" y2="30"/><line x1="69" y1="27" x2="69" y2="30"/><line x1="78" y1="27" x2="78" y2="30"/>
@@ -32,7 +31,6 @@
         <line x1="126" y1="26" x2="126" y2="30"/><line x1="135" y1="27" x2="135" y2="30"/><line x1="145" y1="27" x2="145" y2="30"/><line x1="154" y1="27" x2="154" y2="30"/>
         <line x1="164" y1="26" x2="164" y2="30"/><line x1="173" y1="27" x2="173" y2="30"/><line x1="183" y1="27" x2="183" y2="30"/><line x1="192" y1="26" x2="192" y2="30"/>
       </g>
-      <!-- major ticks + labels -->
       <g class="dial-tick-major" stroke-width="1.4">
         <line x1="12" y1="20" x2="12" y2="30"/>
         <line x1="50" y1="20" x2="50" y2="30"/>
@@ -47,13 +45,12 @@
         <text x="126" y="14">103</text>
         <text x="164" y="14">108</text>
       </g>
-      <!-- needle -->
-      <line class="dial-needle" x1="100" y1="4" x2="100" y2="30"/>
+      <line class="dial-needle" x1="100" y1="4" x2="138" y2="10"/>
       <circle cx="100" cy="4" r="2.2" fill="#A97B4F"/>
     </svg>
 
     <div class="readout">
-      <span><span class="status-dot"></span><span id="statusText">Off air</span></span>
+      <span><span class="status-dot" style="background:#6B5640"></span>Archive</span>
       <span>Net Radio</span>
     </div>
 
@@ -62,30 +59,16 @@
       <span class="fa" lang="fa">هر روز</span>
     </div>
 
-    <div class="transport">
-      <button class="play-btn" id="playBtn" aria-label="Play live radio">
-        <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-        <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
-        <svg class="spinner" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#F2E8D3" stroke-width="3" stroke-linecap="round" stroke-dasharray="40 56"/></svg>
-      </button>
+    <div class="grille">
+      <iframe src="https://embed.acast.com/672df580a42e23dc4ba13185?feed=true" frameborder="0" width="100%" height="280px" loading="lazy" title="Harrooz podcast episodes"></iframe>
     </div>
 
-    <div class="station-label">Listening live</div>
-
-    <div class="knob-nav">
-      <a class="knob-btn" href="podcast.html">
-        <svg viewBox="0 0 24 24"><path d="M12 1a4 4 0 0 0-4 4v6a4 4 0 0 0 8 0V5a4 4 0 0 0-4-4zM5 10v1a7 7 0 0 0 14 0v-1h-2v1a5 5 0 0 1-10 0v-1H5zm6 11v3h2v-3h-2z"/></svg>
-        Podcast Archive
-      </a>
+    <div class="back-link">
+      <a href="index.html">← Back to live radio</a>
     </div>
   </div>
   <footer class="credit">Harrooz · 24/7</footer>
 </main>
 
-<audio id="stream" preload="none">
-  <source src="https://streams.radio.co/s163d89567/listen" type="audio/mpeg">
-</audio>
-
-<script src="app.js"></script>
 </body>
 </html>

@@ -1,0 +1,307 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Space+Mono:wght@400;700&family=Vazirmatn:wght@500;700&display=swap');
+
+:root {
+  --cream: #F2E8D3;
+  --cream-deep: #E7D9BC;
+  --walnut: #3E2A1E;
+  --walnut-light: #6B4630;
+  --walnut-deep: #2A1B12;
+  --amber: #E2954B;
+  --amber-bright: #F4B860;
+  --brass: #A97B4F;
+  --ink: #2B1B12;
+  --ink-soft: #6B5640;
+  --ring-glow: rgba(226, 149, 75, 0.55);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100svh;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'Fraunces', serif;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(255,255,255,0.35), transparent 40%),
+    radial-gradient(circle at 85% 90%, rgba(0,0,0,0.04), transparent 45%);
+}
+
+/* faint paper grain so the cream field doesn't feel flat */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+a { color: inherit; text-decoration: none; }
+
+:focus-visible {
+  outline: 3px solid var(--brass);
+  outline-offset: 3px;
+}
+
+.cabinet {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 380px;
+  background: linear-gradient(160deg, var(--walnut-light), var(--walnut) 55%, var(--walnut-deep));
+  border-radius: 28px;
+  padding: 28px 26px 32px;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.08) inset,
+    0 30px 60px -20px rgba(42, 27, 18, 0.55),
+    0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* wood-grain texture on the cabinet */
+.cabinet::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 28px;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: overlay;
+  background-image: repeating-linear-gradient(
+    100deg,
+    rgba(255,255,255,0.05) 0px,
+    rgba(255,255,255,0.05) 1px,
+    transparent 2px,
+    transparent 7px
+  );
+}
+
+.cabinet-inner {
+  position: relative;
+  background: var(--cream);
+  border-radius: 18px;
+  padding: 26px 22px 24px;
+  box-shadow: inset 0 2px 6px rgba(42,27,18,0.18), inset 0 0 0 1px rgba(169,123,79,0.25);
+}
+
+/* ---------- tuning dial (signature element) ---------- */
+.dial {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-bottom: 6px;
+}
+.dial-track { stroke: var(--ink-soft); opacity: 0.35; }
+.dial-tick-major { stroke: var(--ink-soft); }
+.dial-num {
+  font-family: 'Space Mono', monospace;
+  font-size: 7px;
+  fill: var(--ink-soft);
+}
+.dial-needle {
+  stroke: var(--amber);
+  stroke-width: 2;
+  stroke-linecap: round;
+  transform-box: view-box;
+  transform-origin: 100px 4px;
+  transition: transform 900ms cubic-bezier(.2,.9,.25,1);
+  filter: drop-shadow(0 0 2px rgba(226,149,75,0.9));
+}
+.cabinet[data-state="playing"] .dial-needle { transform: rotate(8deg); }
+.cabinet[data-state="connecting"] .dial-needle { animation: seek 1.1s ease-in-out infinite; }
+@keyframes seek {
+  0%, 100% { transform: rotate(-10deg); }
+  50% { transform: rotate(10deg); }
+}
+
+.readout {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+  margin-bottom: 18px;
+  text-transform: uppercase;
+}
+.readout .status-dot {
+  display: inline-block;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--ink-soft);
+  margin-inline-end: 6px;
+  vertical-align: middle;
+}
+.cabinet[data-state="playing"] .readout .status-dot {
+  background: #C0473A;
+  box-shadow: 0 0 6px rgba(192,71,58,0.8);
+  animation: pulse 1.6s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+
+/* ---------- wordmark ---------- */
+.wordmark {
+  text-align: center;
+  margin: 4px 0 22px;
+}
+.wordmark .en {
+  display: block;
+  font-family: 'Fraunces', serif;
+  font-weight: 700;
+  font-size: 34px;
+  letter-spacing: 0.02em;
+  color: var(--walnut);
+  font-variant: small-caps;
+}
+.wordmark .fa {
+  display: block;
+  direction: rtl;
+  font-family: 'Vazirmatn', sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--ink-soft);
+  margin-top: 4px;
+  letter-spacing: 0;
+}
+
+/* ---------- play button ---------- */
+.transport {
+  display: flex;
+  justify-content: center;
+  margin: 8px 0 18px;
+}
+.play-btn {
+  position: relative;
+  width: 132px;
+  height: 132px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  background: radial-gradient(circle at 32% 28%, var(--amber-bright), var(--amber) 60%, #C97A38 100%);
+  box-shadow:
+    0 0 0 6px var(--brass),
+    0 0 0 7px rgba(42,27,18,0.25),
+    0 14px 24px -10px rgba(42,27,18,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 160ms ease, box-shadow 400ms ease;
+}
+.play-btn:hover { transform: translateY(-1px); }
+.play-btn:active { transform: translateY(1px) scale(0.98); }
+.cabinet[data-state="playing"] .play-btn {
+  box-shadow:
+    0 0 0 6px var(--brass),
+    0 0 0 7px rgba(42,27,18,0.25),
+    0 0 28px 6px var(--ring-glow),
+    0 14px 24px -10px rgba(42,27,18,0.55);
+}
+.play-btn svg { width: 42px; height: 42px; }
+.icon-play { fill: var(--cream); }
+.icon-pause { fill: var(--cream); display: none; }
+.cabinet[data-state="playing"] .icon-play { display: none; }
+.cabinet[data-state="playing"] .icon-pause { display: block; }
+.spinner { display: none; }
+.cabinet[data-state="connecting"] .icon-play { display: none; }
+.cabinet[data-state="connecting"] .spinner { display: block; animation: spin 900ms linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.station-label {
+  text-align: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* ---------- secondary knob / nav button ---------- */
+.knob-nav {
+  margin-top: 22px;
+  display: flex;
+  justify-content: center;
+}
+.knob-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--walnut);
+  color: var(--cream);
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid var(--brass);
+  box-shadow: 0 4px 10px -4px rgba(42,27,18,0.5);
+  transition: transform 160ms ease, background 200ms ease;
+}
+.knob-btn:hover { background: var(--walnut-light); transform: translateY(-1px); }
+.knob-btn:active { transform: translateY(1px); }
+.knob-btn svg { width: 13px; height: 13px; fill: var(--amber-bright); }
+
+/* ---------- podcast page speaker grille ---------- */
+.grille {
+  margin-top: 4px;
+  border-radius: 14px;
+  padding: 12px;
+  background: var(--walnut-deep);
+  box-shadow: inset 0 2px 8px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(169,123,79,0.3);
+}
+.grille iframe {
+  display: block;
+  width: 100%;
+  height: 280px;
+  border: none;
+  border-radius: 8px;
+  background: var(--cream);
+}
+
+.back-link {
+  margin-top: 18px;
+  display: flex;
+  justify-content: center;
+}
+.back-link a {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  border-bottom: 1px dashed var(--brass);
+  padding-bottom: 2px;
+}
+.back-link a:hover { color: var(--ink); }
+
+footer.credit {
+  text-align: center;
+  margin-top: 14px;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+  opacity: 0.6;
+  text-transform: uppercase;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dial-needle, .play-btn, .knob-btn, .status-dot, .spinner { transition: none !important; animation: none !important; }
+}
+
+@media (max-width: 360px) {
+  .wordmark .en { font-size: 28px; }
+  .play-btn { width: 116px; height: 116px; }
+}
